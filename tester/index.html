@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="de">
+<head>
+<title>KlugKauf Tester</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one narrow column for phones (QR scan). Teal hero with the question, a real price example, how it works, then the sign-up. */
+:root {
+  --bg: #F4F8F7;
+  --surface: #FFFFFF;
+  --fg: #12312E;
+  --muted: #4A6360;
+  --line: #D3E2DF;
+  --brand: #0B6E64;
+  --brand-ink: #FFFFFF;
+  --mint: #11A697;
+  --save-bg: #DDF3EE;
+  --save-fg: #08524A;
+  --focus: #0B6E64;
+  --font-display: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1B1A; --surface: #162826; --fg: #E6F2F0; --muted: #9BB5B1; --line: #2A4340;
+    --brand: #11A697; --brand-ink: #062B27; --mint: #11A697; --save-bg: #1D4A44; --save-fg: #BFEFE6; --focus: #7FE0D2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1B1A; --surface: #162826; --fg: #E6F2F0; --muted: #9BB5B1; --line: #2A4340;
+  --brand: #11A697; --brand-ink: #062B27; --mint: #11A697; --save-bg: #1D4A44; --save-fg: #BFEFE6; --focus: #7FE0D2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 18px; line-height: 1.5; margin: 0; }
+.band { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 600px; margin: 0 auto; }
+h1, h2 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.015em; }
+
+.hero { background: var(--brand); color: var(--brand-ink); padding-block: 28px 32px; }
+.brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 600; font-size: 22px; margin-bottom: 22px; }
+.hero h1 { font-size: clamp(32px, 8vw, 46px); line-height: 1.08; }
+.ask { display: inline-block; margin-top: 20px; background: var(--surface); color: var(--fg); font-family: var(--font-display); font-weight: 600; font-size: 21px; padding: 10px 18px; border-radius: 10px; }
+.sub { margin: 16px 0 0; font-size: 19px; }
+
+main { padding-block: 28px 16px; display: flex; flex-direction: column; gap: 36px; }
+h2 { font-size: 24px; line-height: 1.2; margin-bottom: 14px; }
+.eyebrow { font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 10px; }
+
+.compare { display: flex; flex-direction: column; gap: 12px; }
+.row { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.row .name { font-weight: 600; flex: 1 1 220px; min-width: 0; }
+.row .prices { color: var(--muted); font-size: 16px; font-variant-numeric: tabular-nums; flex: 1 1 220px; min-width: 0; }
+.save { background: var(--save-bg); color: var(--save-fg); font-weight: 600; font-variant-numeric: tabular-nums; padding: 4px 12px; border-radius: 999px; font-size: 16px; white-space: nowrap; }
+.note { font-size: 15px; color: var(--muted); margin: 12px 0 0; }
+
+.steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.steps li::before { content: counter(s); width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-family: var(--font-display); font-weight: 600; }
+.steps b { font-weight: 600; }
+
+.signup { background: var(--surface); border: 2px solid var(--mint); border-radius: 16px; padding: 22px 18px; }
+.signup p { margin: 0 0 14px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; }
+input[type=email] { width: 100%; font: inherit; padding: 13px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); min-height: 48px; }
+input[type=email]:focus-visible, .btn:focus-visible, .link:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.btn { font: inherit; font-weight: 600; min-height: 48px; padding: 0 22px; border-radius: 10px; border: 0; cursor: pointer; background: var(--brand); color: var(--brand-ink); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--fg); border: 1.5px solid var(--line); }
+.after { margin-top: 14px; font-size: 16px; color: var(--muted); }
+.after code { font-family: inherit; font-weight: 600; color: var(--fg); user-select: all; }
+
+.person { margin: 0; display: flex; align-items: center; gap: 16px; }
+.person img { flex: none; width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid var(--mint); }
+.person blockquote { margin: 0; min-width: 0; font-style: italic; font-size: 19px; }
+.person small { display: block; font-style: normal; color: var(--muted); font-size: 15px; margin-top: 4px; }
+
+footer a { color: inherit; }
+footer { padding-block: 22px 32px; font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: filter .15s; } .btn:hover { filter: brightness(1.08); } }
+</style>
+
+</head>
+<body>
+<header class="hero band">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 44 44" role="img" aria-label="KlugKauf Logo"><circle cx="22" cy="22" r="22" fill="#11A697"/><path d="M10 12h4l3 14h12l3-10H16" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="31" r="2" fill="#fff"/><circle cx="28" cy="31" r="2" fill="#fff"/><path d="M20 20l3 3 5-6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      KlugKauf
+    </div>
+    <h1>Wo ist dein Einkauf heute am günstigsten?</h1>
+    <div class="ask">Ich suche Android-Tester!</div>
+    <p class="sub">KlugKauf zeigt echte Preise aus deinem Kiez – mit Datum.</p>
+  </div>
+</header>
+
+<main class="band">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:36px">
+
+    <section aria-labelledby="ex">
+      <p class="eyebrow">Gleiches Produkt, anderer Preis</p>
+      <h2 id="ex">So sieht das aus</h2>
+      <div class="compare">
+        <div class="row">
+          <div class="name">Philadelphia Frischkäse 195 g</div>
+          <div class="prices">Rewe und Aldi 2,29 € · Edeka 2,99 €</div>
+          <span class="save">0,70 € günstiger</span>
+        </div>
+        <div class="row">
+          <div class="name">Persil Pulver, 72 Waschladungen</div>
+          <div class="prices">dm 17,95 € · Rossmann 19,99 €</div>
+          <span class="save">2,04 € günstiger</span>
+        </div>
+      </div>
+      <p class="note">Preise aus Filialen in Prenzlauer Berg (10405, 10409), erfasst am 06.10.2026.</p>
+    </section>
+
+    <section aria-labelledby="how">
+      <h2 id="how">So machst du mit</h2>
+      <ol class="steps">
+        <li><div><b>Gmail-Adresse senden.</b> Trag sie unten ein und schick die Mail ab.</div></li>
+        <li><div><b>Link per Mail.</b> Du bekommst den Link zum Mitmachen.</div></li>
+        <li><div><b>App testen.</b> Du bleibst 14 Tage dabei. Nur für Android. Ohne Registrierung.</div></li>
+      </ol>
+    </section>
+
+    <section class="signup" aria-labelledby="go">
+      <h2 id="go">Sei einer der ersten 12!</h2>
+      <p>Teste die App vor allen anderen. Als Dankeschön bekommst du Premium gratis.</p>
+      <form id="f" novalidate>
+        <label for="email">Deine Gmail-Adresse</label>
+        <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="name@gmail.com" required>
+        <div class="actions">
+          <a id="send" class="btn" href="#" role="button">Mail vorbereiten</a>
+          <button id="copy" class="btn ghost" type="button">Adresse kopieren</button>
+        </div>
+      </form>
+      <p class="after" id="after" aria-live="polite">Die Mail geht an <code>kontakt@klugkauf.de</code>. Gmail-Adresse eintragen, absenden – der Link zum Mitmachen kommt per Mail.</p>
+    </section>
+
+    <figure class="person">
+      <img src="data:image/jpeg;base64,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" width="96" height="96" alt="Foto von Julio">
+      <blockquote>
+        „Ich bin Julio aus Prenzlauer Berg und hab die App selbst gebaut.“
+        <small>Entwickelt in Berlin – für Berliner.</small>
+      </blockquote>
+    </figure>
+  </div>
+</main>
+
+<footer class="band">
+  <div class="wrap"><a class="link" href="../impressum.html">Impressum</a> · <a class="link" href="../">Datenschutz</a></div>
+</footer>
+
+<script>
+(function () {
+  var TO = 'kontakt@klugkauf.de';
+  var f = document.getElementById('f'), email = document.getElementById('email');
+  var send = document.getElementById('send'), copy = document.getElementById('copy'), after = document.getElementById('after');
+  // Optional source tag from the link (e.g. ?q=flyer-1), added to the subject so each flyer location can be counted without any tracking.
+  var src = '';
+  try { src = (new URLSearchParams(location.search).get('q') || '').replace(/[^\w-]/g, '').slice(0, 30); } catch (e) {}
+  function subject() { return 'KlugKauf Tester' + (src ? ' [' + src + ']' : ''); }
+  function body() { return 'Meine Gmail-Adresse: ' + email.value.trim(); }
+  function href() { return 'mailto:' + TO + '?subject=' + encodeURIComponent(subject()) + '&body=' + encodeURIComponent(body()); }
+  function valid() { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()); }
+  function refresh() { send.setAttribute('href', href()); }
+  email.addEventListener('input', refresh); refresh();
+  f.addEventListener('submit', function (e) { e.preventDefault(); });
+  send.addEventListener('click', function (e) {
+    if (!valid()) { e.preventDefault(); after.textContent = 'Bitte trag zuerst deine Gmail-Adresse ein.'; email.focus(); return; }
+    after.innerHTML = 'Dein Mail-Programm sollte sich öffnen. Falls nicht, schreib an <code>' + TO + '</code> und nenne deine Gmail-Adresse.';
+  });
+  copy.addEventListener('click', function () {
+    var done = function () { after.innerHTML = 'Kopiert: <code>' + TO + '</code>. Schreib uns mit deiner Gmail-Adresse.'; };
+    var fail = function () { after.innerHTML = 'Bitte kopiere die Adresse von Hand: <code>' + TO + '</code>'; };
+    try { navigator.clipboard.writeText(TO).then(done, fail); } catch (e) { fail(); }
+  });
+})();
+</script>
+
+</body>
+</html>
