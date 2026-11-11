@@ -105,7 +105,7 @@ footer a{color:var(--teal-dark)}
     <h1>Ein Einkauf, mehrere Märkte — immer der beste Preis.</h1>
     <p class="sub">KlugKauf zeigt echte Preise aus deinem Kiez und teilt deine Liste nach dem günstigsten Markt auf. Mit Datum.</p>
     <div class="ask">Ich suche Android-Tester!</div>
-    <p><a class="cta" href="#go">Jetzt Tester werden</a></p>
+    <p><a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener">Jetzt Tester werden</a></p>
 
     <div class="proof" aria-hidden="true">
       <div class="ph-h"><span class="b">Meine Liste</span><span class="s">7 Artikel · 3 Märkte</span></div>
@@ -145,7 +145,7 @@ footer a{color:var(--teal-dark)}
     <section aria-labelledby="how">
       <h2 id="how">So machst du mit</h2>
       <ol class="steps">
-        <li><div><b>Gmail-Adresse senden.</b> Trag sie unten ein und schick die Mail ab.</div></li>
+        <li><div><b>Formular öffnen.</b> Gmail-Adresse eintragen und abschicken.</div></li>
         <li><div><b>Link per Mail.</b> Du bekommst den Link zum Mitmachen.</div></li>
         <li><div><b>App testen.</b> Du bleibst 14 Tage dabei. Nur für Android. Kein Konto in der App nötig.</div></li>
       </ol>
@@ -162,15 +162,8 @@ footer a{color:var(--teal-dark)}
         <small>Entwickelt in Berlin – für Berliner.</small>
       </blockquote>
     </figure>
-      <form id="f" novalidate>
-        <label for="email">Deine Gmail-Adresse</label>
-        <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="name@gmail.com" required>
-        <div class="actions">
-          <a id="send" class="btn" href="#" role="button">Mail vorbereiten</a>
-          <button id="copy" class="btn ghost" type="button">Adresse kopieren</button>
-        </div>
-      </form>
-      <p class="after" id="after" aria-live="polite">Die Mail geht an <code>kontakt@klugkauf.de</code>. Gmail-Adresse eintragen, absenden – der Link zum Mitmachen kommt per Mail.</p>
+      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener" style="width:100%">Jetzt Tester werden</a>
+      <p class="after">Das Formular öffnet sich in einem neuen Tab. Dort trägst du deine Gmail-Adresse ein.</p>
     </section>
 
     <section aria-labelledby="trust">
@@ -182,7 +175,7 @@ footer a{color:var(--teal-dark)}
       </div>
     </section>
 
-    <p style="text-align:center"><a class="btn" href="#go" style="display:inline-flex">Jetzt Tester werden</a></p>
+    <p style="text-align:center"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener" style="display:inline-flex">Jetzt Tester werden</a></p>
   </div>
 </main>
 
@@ -193,32 +186,6 @@ footer a{color:var(--teal-dark)}
   </div>
 </footer>
 
-<script>
-(function () {
-  var TO = 'kontakt@klugkauf.de';
-  var f = document.getElementById('f'), email = document.getElementById('email');
-  var send = document.getElementById('send'), copy = document.getElementById('copy'), after = document.getElementById('after');
-  // Optional source tag from the link (e.g. ?q=flyer-1), added to the subject so each flyer location can be counted without any tracking.
-  var src = '';
-  try { src = (new URLSearchParams(location.search).get('q') || '').replace(/[^\w-]/g, '').slice(0, 30); } catch (e) {}
-  function subject() { return 'KlugKauf Tester' + (src ? ' [' + src + ']' : ''); }
-  function body() { return 'Meine Gmail-Adresse: ' + email.value.trim(); }
-  function href() { return 'mailto:' + TO + '?subject=' + encodeURIComponent(subject()) + '&body=' + encodeURIComponent(body()); }
-  function valid() { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()); }
-  function refresh() { send.setAttribute('href', href()); }
-  email.addEventListener('input', refresh); refresh();
-  f.addEventListener('submit', function (e) { e.preventDefault(); });
-  send.addEventListener('click', function (e) {
-    if (!valid()) { e.preventDefault(); after.textContent = 'Bitte trag zuerst deine Gmail-Adresse ein.'; email.focus(); return; }
-    after.innerHTML = 'Dein Mail-Programm sollte sich öffnen. Falls nicht, schreib an <code>' + TO + '</code> und nenne deine Gmail-Adresse.';
-  });
-  copy.addEventListener('click', function () {
-    var done = function () { after.innerHTML = 'Kopiert: <code>' + TO + '</code>. Schreib uns mit deiner Gmail-Adresse.'; };
-    var fail = function () { after.innerHTML = 'Bitte kopiere die Adresse von Hand: <code>' + TO + '</code>'; };
-    try { navigator.clipboard.writeText(TO).then(done, fail); } catch (e) { fail(); }
-  });
-})();
-</script>
 
 </body>
 </html>
