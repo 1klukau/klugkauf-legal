@@ -78,6 +78,18 @@ input[type=email]:focus-visible,.btn:focus-visible,.link:focus-visible{outline:3
 .after{margin-top:14px;font-size:15px;color:var(--muted)}
 .after code{font-family:inherit;font-weight:700;color:var(--fg);user-select:all}
 
+/* Hero actions side by side */
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px}
+.hero-actions .ask{margin-top:0}
+html{scroll-behavior:smooth}
+#anmeldung{scroll-margin-top:24px}
+
+/* Faded app screenshots behind sections */
+.shot{position:relative;isolation:isolate;overflow:hidden}
+.shot::before{content:"";position:absolute;inset:-60px;z-index:-1;background-repeat:no-repeat;background-position:center;background-size:cover;transform:rotate(-15deg);border-radius:18px;pointer-events:none}
+.shot-2::before{background-image:url(shot-2.jpg)}
+.shot-3::before{background-image:url(shot-3.jpg)}
+
 /* Trust row */
 .trust{display:flex;flex-wrap:wrap;gap:10px 22px}
 .trust div{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
@@ -104,8 +116,9 @@ footer a{color:var(--teal-dark)}
     </div>
     <h1>Ein Einkauf, mehrere Märkte — immer der beste Preis.</h1>
     <p class="sub">KlugKauf zeigt echte Preise aus deinem Kiez und teilt deine Liste nach dem günstigsten Markt auf. Mit Datum.</p>
-    <div class="ask">Ich suche Android-Tester!</div>
-    <p><a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener">Jetzt Tester werden</a></p>
+    <div class="hero-actions">
+      <a class="cta" href="#anmeldung" style="margin-top:0">Jetzt Tester werden ↓</a>
+    </div>
 
     <div class="proof" aria-hidden="true">
       <div class="ph-h"><span class="b">Meine Liste</span><span class="s">7 Artikel · 3 Märkte</span></div>
@@ -124,7 +137,7 @@ footer a{color:var(--teal-dark)}
 <main class="band">
   <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
 
-    <section aria-labelledby="ex">
+    <section class="shot shot-2" aria-labelledby="ex">
       <p class="eyebrow">Gleiches Produkt, anderer Preis</p>
       <h2 id="ex">So sieht das aus</h2>
       <div class="compare">
@@ -142,16 +155,7 @@ footer a{color:var(--teal-dark)}
       <p class="note">Preise aus Filialen in Prenzlauer Berg (10405, 10409), erfasst am 06.10.2026.</p>
     </section>
 
-    <section aria-labelledby="how">
-      <h2 id="how">So machst du mit</h2>
-      <ol class="steps">
-        <li><div><b>Formular öffnen.</b> Gmail-Adresse eintragen und abschicken.</div></li>
-        <li><div><b>Link per Mail.</b> Du bekommst den Link zum Mitmachen.</div></li>
-        <li><div><b>App testen.</b> Du bleibst 14 Tage dabei. Nur für Android. Kein Konto in der App nötig.</div></li>
-      </ol>
-    </section>
-
-    <section class="signup" aria-labelledby="go">
+    <section class="signup shot shot-3" id="anmeldung" aria-labelledby="go">
       <h2 id="go">Sei einer der ersten 12!</h2>
       <p>Teste die App vor allen anderen. Als Dankeschön bekommst du Premium gratis.</p>
       <p class="scarce"><b>Noch 2 von 12 Plätzen frei.</b></p>
@@ -162,11 +166,20 @@ footer a{color:var(--teal-dark)}
         <small>Entwickelt in Berlin – für Berliner.</small>
       </blockquote>
     </figure>
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener" style="width:100%">Jetzt Tester werden</a>
+      <p style="text-align:center;margin:0"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener" style="display:inline-flex;min-width:260px">Jetzt Tester werden</a></p>
       <p class="after">Das Formular öffnet sich in einem neuen Tab. Dort trägst du deine Gmail-Adresse ein.</p>
     </section>
 
-    <section aria-labelledby="trust">
+    <section class="shot shot-3" aria-labelledby="how">
+      <h2 id="how">So machst du mit</h2>
+      <ol class="steps">
+        <li><div><b>Formular öffnen.</b> Gmail-Adresse eintragen und abschicken.</div></li>
+        <li><div><b>Link per Mail.</b> Du bekommst den Link zum Mitmachen.</div></li>
+        <li><div><b>App testen.</b> Du bleibst 14 Tage dabei. Nur für Android. Kein Konto in der App nötig.</div></li>
+      </ol>
+    </section>
+
+    <section class="shot shot-2" aria-labelledby="trust">
       <h2 id="trust" style="font-size:20px">Deine Daten bleiben bei dir</h2>
       <div class="trust">
         <div><span class="c">✓</span> Scan läuft auf deinem Handy</div>
@@ -175,7 +188,7 @@ footer a{color:var(--teal-dark)}
       </div>
     </section>
 
-    <p style="text-align:center"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZyqqj-pRA18DyWtkIiGj1dt7chk4J-nNqHpBwhcoJLcwdUw/viewform?usp=publish-editor" target="_blank" rel="noopener" style="display:inline-flex">Jetzt Tester werden</a></p>
+    <p style="text-align:center;margin:0"><a class="btn" href="#anmeldung" style="display:inline-flex;min-width:260px">Jetzt Tester werden ↑</a></p>
   </div>
 </main>
 
